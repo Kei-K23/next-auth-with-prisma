@@ -40,6 +40,14 @@ const Navbar = () => {
         >
           Account
         </Link>
+        <Link
+          className={`${
+            pathname === "/register" ? "active" : ""
+          } font-bold text-xl hover:text-slate-300`}
+          href={"/register"}
+        >
+          Register
+        </Link>
       </nav>
     </header>
   );
