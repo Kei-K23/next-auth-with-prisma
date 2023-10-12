@@ -3,6 +3,7 @@ import { AuthOptions } from "next-auth";
 import { db } from "./db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+import axios from "axios";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
@@ -14,9 +15,9 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: {
-          label: "Username",
-          placeholder: "foo",
+        email: {
+          label: "Email",
+          placeholder: "foo@example.com",
           type: "text",
         },
         password: {
@@ -25,20 +26,34 @@ export const authOptions: AuthOptions = {
           type: "password",
         },
       },
-      async authorize(credentials: Record<"username" | "password", string>) {
-        const admin_user = { id: 1, username: "Admin", password: "mypassword" };
+      async authorize(credentials: Record<"email" | "password", string>, req) {
+        try {
+          const res = await axios.post(
+            "http://localhost:3000/api/auth_user",
+            JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        if (
-          credentials.username === admin_user.username &&
-          credentials.password === admin_user.password
-        ) {
-          return admin_user;
-        } else {
-          return null;
+          const user = res.data.data;
+          if (user && res.status === 200) {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (e) {
+          console.log(e);
         }
       },
     }),
   ],
+  secret: process.env.MY_SECRET,
   session: {
     strategy: "jwt",
   },

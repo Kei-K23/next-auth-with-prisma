@@ -88,10 +88,10 @@ const Register = () => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="rounded-2xl block mx-auto mt-10 mb-4 w-[95%] md:w-[70%] lg:w-[65%] xl:w-[50%] border-2 border-sky-400 py-4 px-8 bg-sky-400 text-black"
+        className="rounded-2xl block mx-auto mt-10 mb-4 w-[95%] md:w-[70%] lg:w-[65%] xl:w-[50%] border-2  py-4 px-8  text-black"
       >
         <div className="flex flex-col gap-2 my-4">
-          <label htmlFor="name" className="text-lg">
+          <label htmlFor="name" className="text-lg text-white">
             Name:
           </label>
           <input
@@ -107,7 +107,7 @@ const Register = () => {
             required
           />
         </div>
-        <div className="flex flex-col gap-2 my-4">
+        <div className="flex flex-col gap-2 my-4 text-white">
           <label className="text-lg" htmlFor="email">
             Email:
           </label>
@@ -125,7 +125,7 @@ const Register = () => {
           />
         </div>
         <div className="flex flex-col gap-2 my-4">
-          <label className="text-lg" htmlFor="password">
+          <label className="text-lg text-white" htmlFor="password">
             Password:
           </label>
           <input
