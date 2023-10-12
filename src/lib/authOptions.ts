@@ -26,13 +26,13 @@ export const authOptions: AuthOptions = {
           type: "password",
         },
       },
-      async authorize(credentials: Record<"email" | "password", string>, req) {
+      async authorize(credentials) {
         try {
           const res = await axios.post(
             "http://localhost:3000/api/auth_user",
             JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
+              email: credentials?.email,
+              password: credentials?.password,
             }),
             {
               headers: {
@@ -58,4 +58,25 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   debug: process.env.NODE_ENV === "development",
+  callbacks: {
+    async jwt({ token, profile, trigger, session }) {
+      if (trigger === "update" && session.name) {
+        token.name = session.name;
+      }
+      if (profile?.bio) {
+        token.bio = profile.bio;
+      }
+      return token;
+    },
+
+    async session({ token, session }) {
+      if (token.bio) {
+        session.user.bio = token.bio;
+      }
+      if (token.sub) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+  },
 };
