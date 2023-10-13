@@ -2,6 +2,7 @@
 
 import { passwordValidation } from "@/lib/validation";
 import axios, { AxiosError } from "axios";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { useReducer, useState } from "react";
 import toast from "react-hot-toast";
@@ -95,7 +96,7 @@ const Register = () => {
             Name:
           </label>
           <input
-            className="border-2 border-black py-2 px-4 text-lg"
+            className="text-black border-2 border-black py-2 px-4 text-lg"
             id="name"
             name="name"
             type="text"
@@ -112,7 +113,7 @@ const Register = () => {
             Email:
           </label>
           <input
-            className="border-2 border-black py-2 px-4 text-lg"
+            className="text-black border-2 border-black py-2 px-4 text-lg"
             id="email"
             name="email"
             type="email"
@@ -129,7 +130,7 @@ const Register = () => {
             Password:
           </label>
           <input
-            className="border-2 border-black py-2 px-4 text-lg"
+            className="text-black border-2 border-black py-2 px-4 text-lg"
             id="password"
             name="password"
             type="password"
